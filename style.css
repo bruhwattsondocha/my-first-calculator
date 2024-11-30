@@ -59,6 +59,7 @@ body {
   background-color: rgb(83, 87, 114);
   border-radius: 12px;
   color: rgb(243, 243, 243);
+  cursor: pointer;
 }
 
 .keyboard-row.one div {
@@ -90,3 +91,4 @@ body {
   align-items: flex-end;
   justify-content: flex-end;
 }
+
