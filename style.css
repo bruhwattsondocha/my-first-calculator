@@ -82,3 +82,11 @@ body {
 #zeroButton {
   flex: 1;
 }
+
+.display {
+  color: white;
+  display: flex;
+  padding: 36px;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
