@@ -39,3 +39,12 @@ const display = document.querySelector('.display .window');
 function populateDisplay(number) {
   display.textContent += number;
 }
+let displayNumber;
+const numberButtons = document.querySelectorAll('.number');
+for (let number of numberButtons) {
+  number.addEventListener('click', (e) => {
+    populateDisplay(e.target.textContent);
+    displayNumber = display.textContent; 
+  })
+}
+
