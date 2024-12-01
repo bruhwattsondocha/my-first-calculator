@@ -94,6 +94,7 @@ for (let operator of functionalButton) {
 
 // ON PRESSING EQUALS BUTTON
 equalsButton.addEventListener('click', () => {
+  if (!firstValue && !secondValue) return 1;
   if (!secondValue) {
    secondValue = tempValue;
   }
