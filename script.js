@@ -1,21 +1,21 @@
 function add(a, b, operator) {
   operator = '+';
-  return a + b; 
+  return +a + +b; 
 };
 
 function subtract(a, b, operator) {
   operator = '-';
-  return a - b; 
+  return +a - +b; 
 }
 
 function multiply(a, b, operator) {
   operator = '×';
-  return a * b; 
+  return +a * +b; 
 }
 
 function divide(a, b, operator) {
   operator = '/';
-  return a / b; 
+  return +a / +b; 
 }
 
 // Takes two numbers and an operator
@@ -34,40 +34,78 @@ function operate(a, operator, b) {
   }
 }
 
-const display = document.querySelector('.display .window');
-
-function populateDisplay(number) {
-  display.textContent += number;
-}
-let displayNumber;
-const numberButtons = document.querySelectorAll('.number');
-for (let number of numberButtons) {
-  number.addEventListener('click', (e) => {
-    populateDisplay(e.target.textContent);
-    displayNumber = display.textContent; 
-  })
-}
-
 let firstValue;
 let secondValue;
 let operatorSign;
-// Add all operator numbers
+const displayExpression = document.querySelector('.display .expression');
+const displayResult = document.querySelector('.display .result');
+const numberButtons = document.querySelectorAll('.number');
 const functionalButton = document.querySelectorAll('.functional-button');
+const equalsButton = document.querySelector('#equalsButton');
+let tempValue = '';
+
+// Make digit appear on display, not in temp value
+function populateDisplay(number) {
+  displayExpression.textContent += number;
+}
+
+// ON PRESSING NUMBER BUTTON
+// Populate display and add this number to tempValue
+for (let number of numberButtons) {
+  number.addEventListener('click', (e) => {
+    populateDisplay(e.target.textContent);
+    tempValue += e.target.textContent;
+  })
+}
+
+// ON PRESSING OPERATOR BUTTON
 for (let operator of functionalButton) {
   operator.addEventListener('click', (e) => {
-    firstValue = displayNumber;
-    display.textContent = ''; 
-    displayNumber = '';
+    if (!firstValue) {
+      firstValue = tempValue;
+      tempValue = '';
+    }
+    if (!secondValue && firstValue) {
+      secondValue = tempValue;
+      tempValue = '';
+    }
+    if (firstValue && secondValue) {
+      firstValue = operate(firstValue, operatorSign, secondValue);
+      secondValue = '';
+    }
     operatorSign = operator.innerText;
+    if (firstValue === '' && secondValue) {
+      firstValue = displayExpression.textContent;
+      displayExpression.textContent += `${operatorSign}`; 
+      tempValue = '';
+      return;
+    };
+    displayExpression.textContent += `${operatorSign}`; 
   })
 };
-// On click of operator store displayNumber as value1 
-// Store operator sign and clear display.textContent and displayNumber
-const equalsButton = document.querySelector('#equalsButton');
+
+// ON PRESSING EQUALS BUTTON
 equalsButton.addEventListener('click', () => {
-  secondValue = displayNumber;
+  if (!secondValue) {
+   secondValue = tempValue;
+  }
+  if (secondValue) {
+
+  }
   const result = operate(+firstValue, operatorSign, +secondValue);
-  display.textContent = result;
+  displayExpression.textContent = result;
+  firstValue = result;
+  secondValue = '';
+  tempValue = '';
 })
-// And on pressing equals assign displayNumber as value2 
+// And on pressing equals assign tempValue as value2 
 // And call operate(value1, operator, value2);
+
+// Expression on top
+// Result below, after operator pressed
+
+/////////////////////////////////////
+// Don't assign value on display to value, assign numbers independently on temp value
+// If press operator then assign it to visualDisplay only, not to temp value
+// firstValue + secondValue = result, display it, firstValue = result
+// if firstValue !== undefined then assign to secondValue
