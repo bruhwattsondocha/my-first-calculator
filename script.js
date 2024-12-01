@@ -8,26 +8,6 @@ const ERROR_MESSAGE = 'ERROR!';
 const expressionArray = [];
 let buffer = '';
 
-function truncate(number) {
-  return Math.floor(number * 100) / 100;
-}
-
-function add(a, b) {
-  return +a + +b; 
-};
-
-function subtract(a, b) {
-  return +a - +b; 
-}
-
-function multiply(a, b) {
-  return +a * +b; 
-}
-
-function divide(a, b) {;
-  return +a / +b; 
-}
-
 numberButtons.forEach(button => {
   button.addEventListener('click', () => {
     appendToBuffer(button.textContent);
@@ -44,6 +24,27 @@ functionalButtons.forEach(button => {
 });
 
 equalsButton.addEventListener('click', calculate);
+
+
+function truncate(number) {
+  return Math.floor(number * 100) / 100;
+}
+
+function add(a, b) {
+  return +a + +b; 
+}
+
+function subtract(a, b) {
+  return +a - +b; 
+}
+
+function multiply(a, b) {
+  return +a * +b; 
+}
+
+function divide(a, b) {;
+  return +a / +b; 
+}
 
 
 function pushValue() {
