@@ -125,23 +125,3 @@ function calculate() {
   const result = expressionArray[0];
   displayFinalResult(result);
 }
-
-// expressionArray.pop()
-// '/'
-// expressionArray
-// (5) ['2', '+', '2', '×', '2']
-// operatorIndex = expressionArray.findIndex(item => item === '×')
-// 3
-// expressionArray[operatorIndex - 1] = expressionArray[operatorIndex - 1] * expressionArray[operatorIndex + 1]
-// 4
-// expressionArray
-// (5) ['2', '+', 4, '×', '2']
-// expressionArray.splice(operatorIndex, 2)
-// (2) ['×', '2']
-// expressionArray
-// (3) ['2', '+', 4]
-// operatorIndex = expressionArray.findIndex(item => item === '+')
-// 1
-// expressionArray[operatorIndex - 1] = expressionArray[operatorIndex - 1] + expressionArray[operatorIndex + 1]
-// '24'
-// ﻿
