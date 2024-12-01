@@ -1,33 +1,19 @@
 function truncate(number) {
   return Math.floor(number * 100) / 100;
 }
-
-function add(a, b, operator) {
-  operator = '+';
+function add(a, b) {
   return +a + +b; 
 };
-
-function subtract(a, b, operator) {
-  operator = '-';
+function subtract(a, b) {
   return +a - +b; 
 }
-
-function multiply(a, b, operator) {
-  operator = '×';
+function multiply(a, b) {
   return +a * +b; 
 }
-
-function divide(a, b, operator) {
-  operator = '/';
-  if (+b === 0) {
-    return ERROR_MESSAGE;
-  }
+function divide(a, b) {;
   return +a / +b; 
 }
 
-// Takes two numbers and an operator
-// Depending on what operator is passed
-// Calls appropriate function
 function operate(a, operator, b) {
   switch(operator) {
     case '+':
@@ -41,10 +27,6 @@ function operate(a, operator, b) {
   }
 }
 
-let firstValue;
-let secondValue;
-let operatorSign;
-let tempValue = '';
 const displayExpression = document.querySelector('.display .expression');
 const displayResult = document.querySelector('.display .result');
 const numberButtons = document.querySelectorAll('.number');
@@ -53,81 +35,30 @@ const equalsButton = document.querySelector('#equalsButton');
 const clearButton = document.querySelector('#clearButton');
 const ERROR_MESSAGE = 'ERROR!';
 
-// Make digit appear on display, not in temp value
-function populateDisplay(number) {
-  if (displayExpression.textContent === '0') {
-    displayExpression.textContent = '';
-  }
-  if (displayExpression.textContent === ERROR_MESSAGE) {
-    clear();
-  }
-  displayExpression.textContent += number;
-}
-
-// ON PRESSING NUMBER BUTTON
-// Populate display and add this number to tempValue
-for (let number of numberButtons) {
-  number.addEventListener('click', (e) => {
-    populateDisplay(e.target.textContent);
-    tempValue += e.target.textContent;
+// Create array
+const expressionArray = [];
+// Create temporary number holder
+let buffer = '';
+// When pressing OPERATOR push tempNumber to array and OPERATOR itself
+functionalButton.forEach(button => {
+  button.addEventListener('click', () => {
+    pushValue();
+    pushOperator(button.textContent)
   })
+});
+// Do this how many times you want
+// After pressing EQUALS sign loop through array to find operator with higher precedence
+// FOR NOW they are MULTIPLY or DIVIDE and after them SUM and SUBTRACT
+// Take expressionArray[operatorIndex] and call a function that uses OPERATOR sign and operates expressionArray[operatorIndex - 1] and expressionArray[operatorIndex + 1] 
+// and store it in expressionArray[operatorIndex - 1] and remove expressionArray[operatorIndex] and expressionArray[operatorIndex + 1]
+// Loop again until there are no more MULTIPLY or DIVIDE operators
+// Then loop through OPERATORS with lower precedence i.e. SUM and SUBTRACT
+// Display expressionArray.join(' ') on display
+
+function pushValue() {
+  expressionArray.push(buffer);
+  buffer = '';
 }
-
-// ON PRESSING OPERATOR BUTTON
-for (let operator of functionalButton) {
-  operator.addEventListener('click', (e) => {
-
-    if (!firstValue) {
-      firstValue = tempValue;
-      tempValue = '';
-    }
-    if (!secondValue && firstValue) {
-      secondValue = tempValue;
-      tempValue = '';
-    }
-    if (firstValue && secondValue) {
-      firstValue = operate(firstValue, operatorSign, secondValue);
-      if (firstValue === ERROR_MESSAGE) {
-        displayExpression.textContent = ERROR_MESSAGE;
-        return 1;
-      }
-      displayExpression.textContent = truncate(firstValue);
-      secondValue = '';
-    }
-    operatorSign = operator.innerText;
-    if (firstValue === '' && secondValue) {
-      firstValue = displayExpression.textContent;
-      displayExpression.textContent += `${operatorSign}`; 
-      tempValue = '';
-      return;
-    };
-    displayExpression.textContent += `${operatorSign}`; 
-  })
-};
-
-// ON PRESSING EQUALS BUTTON
-equalsButton.addEventListener('click', () => {
-  if (firstValue === undefined && secondValue === undefined) return 1;
-  if (!secondValue) {
-   secondValue = tempValue;
-  }
-  const result = operate(+firstValue, operatorSign, +secondValue);
-  displayExpression.textContent = truncate(result);
-  firstValue = result;
-  if (result === ERROR_MESSAGE) {
-    displayExpression.textContent = ERROR_MESSAGE;
-    return 1;
-  }
-  secondValue = '';
-  tempValue = '';
-})
-
-function clear() {
-  firstValue = undefined;
-  secondValue = undefined;
-  operatorSign = undefined;
-  tempValue = '';
-  displayExpression.textContent = '';
+function pushOperator(operator) {
+  expressionArray.push(operator)
 }
-
-clearButton.addEventListener('click', clear);
