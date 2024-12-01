@@ -41,12 +41,13 @@ function operate(a, operator, b) {
 let firstValue;
 let secondValue;
 let operatorSign;
+let tempValue = '';
 const displayExpression = document.querySelector('.display .expression');
 const displayResult = document.querySelector('.display .result');
 const numberButtons = document.querySelectorAll('.number');
 const functionalButton = document.querySelectorAll('.functional-button');
 const equalsButton = document.querySelector('#equalsButton');
-let tempValue = '';
+const clearButton = document.querySelector('#clearButton');
 
 // Make digit appear on display, not in temp value
 function populateDisplay(number) {
@@ -105,11 +106,10 @@ equalsButton.addEventListener('click', () => {
   tempValue = '';
 })
 
-
-//TO DO
-//
-// Change display when evaluating number!
-// 
-// Add +/- button
-// Add remainder
-// 
+function clear() {
+  firstValue = undefined;
+  secondValue = undefined;
+  operatorSign = undefined;
+  tempValue = '';
+  displayExpression.textContent = '';
+}
