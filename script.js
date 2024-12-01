@@ -46,6 +46,9 @@ let tempValue = '';
 
 // Make digit appear on display, not in temp value
 function populateDisplay(number) {
+  if (displayExpression.textContent === '0') {
+    displayExpression.textContent = '';
+  }
   displayExpression.textContent += number;
 }
 
@@ -71,6 +74,7 @@ for (let operator of functionalButton) {
     }
     if (firstValue && secondValue) {
       firstValue = operate(firstValue, operatorSign, secondValue);
+      displayExpression.textContent = firstValue;
       secondValue = '';
     }
     operatorSign = operator.innerText;
@@ -98,14 +102,12 @@ equalsButton.addEventListener('click', () => {
   secondValue = '';
   tempValue = '';
 })
-// And on pressing equals assign tempValue as value2 
-// And call operate(value1, operator, value2);
 
-// Expression on top
-// Result below, after operator pressed
 
-/////////////////////////////////////
-// Don't assign value on display to value, assign numbers independently on temp value
-// If press operator then assign it to visualDisplay only, not to temp value
-// firstValue + secondValue = result, display it, firstValue = result
-// if firstValue !== undefined then assign to secondValue
+//TO DO
+//
+// Change display when evaluating number!
+// 
+// Add +/- button
+// Add remainder
+// 
