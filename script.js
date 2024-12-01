@@ -30,22 +30,31 @@ function operate(a, operator, b) {
 const displayExpression = document.querySelector('.display .expression');
 const displayResult = document.querySelector('.display .result');
 const numberButtons = document.querySelectorAll('.number');
-const functionalButton = document.querySelectorAll('.functional-button');
+const functionalButtons = document.querySelectorAll('.functional-button');
 const equalsButton = document.querySelector('#equalsButton');
 const clearButton = document.querySelector('#clearButton');
 const ERROR_MESSAGE = 'ERROR!';
 
 // Create array
 const expressionArray = [];
-// Create temporary number holder
 let buffer = '';
+// Create temporary number holder
+// When pressing NUMBER append it to buffer
+numberButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    appendToBuffer(button.textContent);
+    refreshDisplay(button.textContent);
+  })
+});
 // When pressing OPERATOR push tempNumber to array and OPERATOR itself
-functionalButton.forEach(button => {
+functionalButtons.forEach(button => {
   button.addEventListener('click', () => {
     pushValue();
     pushOperator(button.textContent)
+    refreshDisplay(button.textContent);
   })
 });
+// 
 // Do this how many times you want
 // After pressing EQUALS sign loop through array to find operator with higher precedence
 // FOR NOW they are MULTIPLY or DIVIDE and after them SUM and SUBTRACT
@@ -61,4 +70,10 @@ function pushValue() {
 }
 function pushOperator(operator) {
   expressionArray.push(operator)
+}
+function appendToBuffer(number) {
+  buffer += number;
+}
+function refreshDisplay(number) {
+  displayExpression.textContent += number;
 }
