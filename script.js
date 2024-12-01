@@ -85,34 +85,41 @@ function displayFinalResult(number) {
 function calculate() {
   pushValue();
   // operators: (× and /),(+ and -)
-  do {
+  do {  // DO UNTIL EXPRESSION ARRAY LENGTH IS 1
     // Find multiply or division operator index 
-    let operatorIndex = expressionArray.findIndex(item => item === '×' || item === '/');
+    let operatorIndex;
     // If operator is '×' call multiply function
-    if (expressionArray[operatorIndex] === '×') {
-      expressionArray[operatorIndex - 1] = multiply(+expressionArray[operatorIndex - 1], +expressionArray[operatorIndex + 1])
-      expressionArray.splice(operatorIndex, 2);
+    do { // DO UNTIL THERE ARE NO MORE MULTIPLY AND DIVISION OPERATORS
+      operatorIndex = expressionArray.findIndex(item => item === '×' || item === '/');
+      if (expressionArray[operatorIndex] === '×') {
+        expressionArray[operatorIndex - 1] = multiply(+expressionArray[operatorIndex - 1], +expressionArray[operatorIndex + 1])
+        expressionArray.splice(operatorIndex, 2);
+      }
+      // If operator is '/' call divide function
+      else if ((expressionArray[operatorIndex] === '/')) {
+        expressionArray[operatorIndex - 1] = divide(+expressionArray[operatorIndex - 1], +expressionArray[operatorIndex + 1])
+        expressionArray.splice(operatorIndex, 2);
+      }
     }
-    // If operator is '/' call divide function
-    else if ((expressionArray[operatorIndex] === '/')) {
-      expressionArray[operatorIndex - 1] = divide(+expressionArray[operatorIndex - 1], +expressionArray[operatorIndex + 1])
-      expressionArray.splice(operatorIndex, 2);
-    }
+    while (expressionArray.findIndex(item => item === '×' || item === '/') !== -1);
     // If there are no more division and multiplication operators
-    if (expressionArray.findIndex(item => item === '×' || item === '/') === -1) {
-      // Find add and subtract operator index
-      operatorIndex = expressionArray.findIndex(item => item === '+' || item === '-');
-    }
+    
+    
+    // Find add and subtract operator index
     // If operator is '+' call add function
-    if (expressionArray[operatorIndex] === '+') {
-      expressionArray[operatorIndex - 1] = add(+expressionArray[operatorIndex - 1], +expressionArray[operatorIndex + 1])
-      expressionArray.splice(operatorIndex, 2);
+    do { // DO UNTIL THERE ARE NO MORE ADD AND SUBTRACT OPERATORS
+      operatorIndex = expressionArray.findIndex(item => item === '+' || item === '-');
+      if (expressionArray[operatorIndex] === '+') {
+        expressionArray[operatorIndex - 1] = add(+expressionArray[operatorIndex - 1], +expressionArray[operatorIndex + 1])
+        expressionArray.splice(operatorIndex, 2);
+      }
+      // If operator is '-' call subtract function
+      else if ((expressionArray[operatorIndex] === '-')) {
+        expressionArray[operatorIndex - 1] = subtract(+expressionArray[operatorIndex - 1], +expressionArray[operatorIndex + 1])
+        expressionArray.splice(operatorIndex, 2);
+      }
     }
-    // If operator is '-' call subtract function
-    else if ((expressionArray[operatorIndex] === '-')) {
-      expressionArray[operatorIndex - 1] = subtract(+expressionArray[operatorIndex - 1], +expressionArray[operatorIndex + 1])
-      expressionArray.splice(operatorIndex, 2);
-    }
+    while (expressionArray.findIndex(item => item === '+' || item === '-') !== -1);
   } 
   while (expressionArray.length !== 1);
   const result = expressionArray[0];
