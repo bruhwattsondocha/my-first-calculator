@@ -1,3 +1,7 @@
+function truncate(number) {
+  return Math.floor(number * 100) / 100;
+}
+
 function add(a, b, operator) {
   operator = '+';
   return +a + +b; 
@@ -74,7 +78,7 @@ for (let operator of functionalButton) {
     }
     if (firstValue && secondValue) {
       firstValue = operate(firstValue, operatorSign, secondValue);
-      displayExpression.textContent = firstValue;
+      displayExpression.textContent = truncate(firstValue);
       secondValue = '';
     }
     operatorSign = operator.innerText;
@@ -93,11 +97,8 @@ equalsButton.addEventListener('click', () => {
   if (!secondValue) {
    secondValue = tempValue;
   }
-  if (secondValue) {
-
-  }
   const result = operate(+firstValue, operatorSign, +secondValue);
-  displayExpression.textContent = result;
+  displayExpression.textContent = truncate(result);
   firstValue = result;
   secondValue = '';
   tempValue = '';
