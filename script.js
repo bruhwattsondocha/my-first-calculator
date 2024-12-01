@@ -113,3 +113,5 @@ function clear() {
   tempValue = '';
   displayExpression.textContent = '';
 }
+
+clearButton.addEventListener('click', clear);
