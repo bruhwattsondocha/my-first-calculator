@@ -19,6 +19,9 @@ function multiply(a, b, operator) {
 
 function divide(a, b, operator) {
   operator = '/';
+  if (+b === 0) {
+    return ERROR_MESSAGE;
+  }
   return +a / +b; 
 }
 
@@ -48,11 +51,15 @@ const numberButtons = document.querySelectorAll('.number');
 const functionalButton = document.querySelectorAll('.functional-button');
 const equalsButton = document.querySelector('#equalsButton');
 const clearButton = document.querySelector('#clearButton');
+const ERROR_MESSAGE = 'ERROR!';
 
 // Make digit appear on display, not in temp value
 function populateDisplay(number) {
   if (displayExpression.textContent === '0') {
     displayExpression.textContent = '';
+  }
+  if (displayExpression.textContent === ERROR_MESSAGE) {
+    clear();
   }
   displayExpression.textContent += number;
 }
@@ -69,6 +76,7 @@ for (let number of numberButtons) {
 // ON PRESSING OPERATOR BUTTON
 for (let operator of functionalButton) {
   operator.addEventListener('click', (e) => {
+
     if (!firstValue) {
       firstValue = tempValue;
       tempValue = '';
@@ -79,6 +87,10 @@ for (let operator of functionalButton) {
     }
     if (firstValue && secondValue) {
       firstValue = operate(firstValue, operatorSign, secondValue);
+      if (firstValue === ERROR_MESSAGE) {
+        displayExpression.textContent = ERROR_MESSAGE;
+        return 1;
+      }
       displayExpression.textContent = truncate(firstValue);
       secondValue = '';
     }
@@ -102,6 +114,10 @@ equalsButton.addEventListener('click', () => {
   const result = operate(+firstValue, operatorSign, +secondValue);
   displayExpression.textContent = truncate(result);
   firstValue = result;
+  if (result === ERROR_MESSAGE) {
+    displayExpression.textContent = ERROR_MESSAGE;
+    return 1;
+  }
   secondValue = '';
   tempValue = '';
 })
