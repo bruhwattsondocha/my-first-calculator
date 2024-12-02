@@ -48,8 +48,10 @@ function divide(a, b) {;
 
 
 function pushValue() {
-  expressionArray.push(buffer);
-  buffer = '';
+  if (buffer) {
+    expressionArray.push(buffer);
+    buffer = '';
+  };
 }
 
 function pushOperator(operator) {
@@ -69,6 +71,8 @@ function displayFinalResult(number) {
 }
 
 function calculate() {
+  // Return if array is empty
+  if (expressionArray.length === 0 || expressionArray.length === 1) return 1;
   pushValue();
   // operators: (× and /),(+ and -)
   do {  // DO UNTIL EXPRESSION ARRAY LENGTH IS 1
@@ -107,4 +111,12 @@ function calculate() {
   while (expressionArray.length !== 1);
   const result = expressionArray[0];
   displayFinalResult(result);
+  // expressionArray.pop();
 }
+
+
+// TODO 
+// Pressing = before entering all of the numbers or an operator could cause problems!
+// Pressing “clear” should wipe out any existing data. Make sure the user is really starting fresh after pressing “clear”.
+// Display a snarky error message if the user tries to divide by 0… and don’t let it crash your calculator!
+// Dont let pass in multiple operators at once by checking if last array element is operator
