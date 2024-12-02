@@ -29,6 +29,11 @@ functionalButtons.forEach(button => {
         }
     }
     if (expressionArray[0] === ERROR_MESSAGE) clear();
+    if (buffer === '' && expressionArray.length === 1) {
+      pushValue();
+      pushOperator(button.textContent)
+      refreshDisplay(button.textContent);
+    }
     if (buffer === '') return;
     pushValue();
     pushOperator(button.textContent)
