@@ -171,6 +171,7 @@ function calculate() {
 
 
 // TODO 
-// dont let equals be pressed if last item of the array is operator
-// Add modulo
 // Add + -
+// Add backspace button to undo last input
+// Add keyboard support
+// Add modulo
