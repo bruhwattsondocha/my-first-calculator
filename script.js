@@ -119,13 +119,13 @@ function isOperator(item) {
 }
 
 function calculate() {
+  // Return if array is empty
+  if (expressionArray.length === 0 || expressionArray.length === 1) return 1;
+  pushValue();
   let lastItemOfArray = expressionArray[expressionArray.length - 1];
   if (isOperator(lastItemOfArray)) {
     return;
     }
-  // Return if array is empty
-    if (expressionArray.length === 0 || expressionArray.length === 1) return 1;
-  pushValue();
   // operators: (× and /),(+ and -)
   do {  // DO UNTIL EXPRESSION ARRAY LENGTH IS 1
     // Find multiply or division operator index 
