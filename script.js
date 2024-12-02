@@ -19,6 +19,7 @@ numberButtons.forEach(button => {
 functionalButtons.forEach(button => {
   button.addEventListener('click', () => {
     if (expressionArray[0] === ERROR_MESSAGE) clear();
+    if (buffer === '') return;
     pushValue();
     pushOperator(button.textContent)
     refreshDisplay(button.textContent);
