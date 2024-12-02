@@ -19,17 +19,14 @@ numberButtons.forEach(button => {
 
 functionalButtons.forEach(button => {
   button.addEventListener('click', () => {
+    let lastItemOfArray = expressionArray[expressionArray.length - 1];
     if (buffer === '') {
-      switch (expressionArray[expressionArray.length - 1]) {
-        case '×':
-        case '+':
-        case '-':
-        case '/':
-          switchOperator(button.textContent);
-          removeLastSymbol(); 
-          refreshDisplay(button.textContent);
-          return;
-      }
+      if (isOperator(lastItemOfArray)) {
+        switchOperator(button.textContent);
+        removeLastSymbol(); 
+        refreshDisplay(button.textContent);
+        return;
+        }
     }
     if (expressionArray[0] === ERROR_MESSAGE) clear();
     if (buffer === '') return;
@@ -104,6 +101,18 @@ function removeLastSymbol() {
   displayExpression.textContent = displayExpression.textContent.slice(0, -1);
 }
 
+function isOperator(item) {
+  switch (item) {
+    case '×':
+    case '+':
+    case '-':
+    case '/':
+      return true;
+    default: 
+      return false;
+  } 
+}
+
 function calculate() {
   // Return if array is empty
   if (expressionArray.length === 0 || expressionArray.length === 1) return 1;
@@ -154,5 +163,6 @@ function calculate() {
 
 // TODO 
 // Dont let pass in multiple operators at once by checking if last array element is operator
+// dont let equals be pressed if last item of the array is operator
 // Add modulo
 // Add + -
