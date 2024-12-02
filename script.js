@@ -1,3 +1,4 @@
+// Variables
 const displayExpression = document.querySelector('.display .expression');
 const displayResult = document.querySelector('.display .result');
 const numberButtons = document.querySelectorAll('.number');
@@ -5,11 +6,14 @@ const functionalButtons = document.querySelectorAll('.functional-button');
 const equalsButton = document.querySelector('#equalsButton');
 const clearButton = document.querySelector('#clearButton');
 const backspaceButton = document.querySelector('#backspace');
+const changeSignButton = document.querySelector('#changeSign');
 const ERROR_MESSAGE = 'ERROR!';
 const expressionArray = [];
 const OPERATORS = ['×', '+', '-', '/']
 let buffer = '';
 
+
+// Event listeners
 numberButtons.forEach(button => {
   button.addEventListener('click', () => {
     if (expressionArray[0] === ERROR_MESSAGE) clear();
@@ -48,6 +52,9 @@ clearButton.addEventListener('click', clear);
 
 backspaceButton.addEventListener('click', backspace);
 
+changeSignButton.addEventListener('click', changeSign);
+
+// Functions 
 function truncate(number) {
   if (typeof number === 'string') return ERROR_MESSAGE;
   return Math.floor(number * 100) / 100;
@@ -126,6 +133,10 @@ function backspace() {
   removeLastSymbol();
 }
 
+function changeSign() {
+ // DO LATER
+}
+
 function calculate() {
   // Return if array is empty
   if (expressionArray.length === 0 || expressionArray.length === 1) return 1;
@@ -179,8 +190,7 @@ function calculate() {
 
 
 // TODO 
-// Add backspace button to undo last input
-// Add + -
 // Dont allow write more than one DOT . (if button = . and if buffer has . return)
 // Add keyboard support
 // Add modulo
+// Add + - DO LATER
