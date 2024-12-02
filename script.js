@@ -119,8 +119,12 @@ function isOperator(item) {
 }
 
 function calculate() {
+  let lastItemOfArray = expressionArray[expressionArray.length - 1];
+  if (isOperator(lastItemOfArray)) {
+    return;
+    }
   // Return if array is empty
-  if (expressionArray.length === 0 || expressionArray.length === 1) return 1;
+    if (expressionArray.length === 0 || expressionArray.length === 1) return 1;
   pushValue();
   // operators: (× and /),(+ and -)
   do {  // DO UNTIL EXPRESSION ARRAY LENGTH IS 1
@@ -167,7 +171,6 @@ function calculate() {
 
 
 // TODO 
-// Dont let pass in multiple operators at once by checking if last array element is operator
 // dont let equals be pressed if last item of the array is operator
 // Add modulo
 // Add + -
