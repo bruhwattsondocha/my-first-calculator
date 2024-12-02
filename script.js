@@ -65,7 +65,7 @@ function refreshDisplay(number) {
 }
 
 function displayFinalResult(number) {
-  displayExpression.textContent = number;
+  displayExpression.textContent = truncate(number);
 }
 
 function calculate() {
