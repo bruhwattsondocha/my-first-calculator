@@ -6,6 +6,7 @@ const equalsButton = document.querySelector('#equalsButton');
 const clearButton = document.querySelector('#clearButton');
 const ERROR_MESSAGE = 'ERROR!';
 const expressionArray = [];
+const OPERATORS = ['×', '+', '-', '/']
 let buffer = '';
 
 numberButtons.forEach(button => {
@@ -18,6 +19,18 @@ numberButtons.forEach(button => {
 
 functionalButtons.forEach(button => {
   button.addEventListener('click', () => {
+    if (buffer === '') {
+      switch (expressionArray[expressionArray.length - 1]) {
+        case '×':
+        case '+':
+        case '-':
+        case '/':
+          switchOperator(button.textContent);
+          removeLastSymbol(); 
+          refreshDisplay(button.textContent);
+          return;
+      }
+    }
     if (expressionArray[0] === ERROR_MESSAGE) clear();
     if (buffer === '') return;
     pushValue();
@@ -82,6 +95,15 @@ function clear() {
   displayExpression.textContent = '';
 }
 
+function switchOperator(button) {
+  expressionArray.pop();
+  pushOperator(button);
+}
+
+function removeLastSymbol() {
+  displayExpression.textContent = displayExpression.textContent.slice(0, -1);
+}
+
 function calculate() {
   // Return if array is empty
   if (expressionArray.length === 0 || expressionArray.length === 1) return 1;
@@ -131,7 +153,6 @@ function calculate() {
 
 
 // TODO 
-// Display a snarky error message if the user tries to divide by 0… and don’t let it crash your calculator!
 // Dont let pass in multiple operators at once by checking if last array element is operator
 // Add modulo
 // Add + -
