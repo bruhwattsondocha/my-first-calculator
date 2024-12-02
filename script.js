@@ -10,6 +10,7 @@ let buffer = '';
 
 numberButtons.forEach(button => {
   button.addEventListener('click', () => {
+    if (expressionArray[0] === ERROR_MESSAGE) clear();
     appendToBuffer(button.textContent);
     refreshDisplay(button.textContent);
   })
@@ -17,6 +18,7 @@ numberButtons.forEach(button => {
 
 functionalButtons.forEach(button => {
   button.addEventListener('click', () => {
+    if (expressionArray[0] === ERROR_MESSAGE) clear();
     pushValue();
     pushOperator(button.textContent)
     refreshDisplay(button.textContent);
@@ -29,6 +31,7 @@ clearButton.addEventListener('click', clear);
 
 
 function truncate(number) {
+  if (typeof number === 'string') return ERROR_MESSAGE;
   return Math.floor(number * 100) / 100;
 }
 
@@ -45,6 +48,7 @@ function multiply(a, b) {
 }
 
 function divide(a, b) {;
+  if (b === 0) return ERROR_MESSAGE;
   return +a / +b; 
 }
 
@@ -96,6 +100,10 @@ function calculate() {
       else if ((expressionArray[operatorIndex] === '/')) {
         expressionArray[operatorIndex - 1] = divide(+expressionArray[operatorIndex - 1], +expressionArray[operatorIndex + 1])
         expressionArray.splice(operatorIndex, 2);
+        if (expressionArray.includes(ERROR_MESSAGE)) {
+          expressionArray.length = 0;
+          expressionArray[0] = ERROR_MESSAGE;
+        }
       }
     }
     while (expressionArray.findIndex(item => item === '×' || item === '/') !== -1);
@@ -124,3 +132,5 @@ function calculate() {
 // TODO 
 // Display a snarky error message if the user tries to divide by 0… and don’t let it crash your calculator!
 // Dont let pass in multiple operators at once by checking if last array element is operator
+// Add modulo
+// Add + -
