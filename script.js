@@ -37,7 +37,7 @@ changeSignButton.addEventListener('click', changeSign);
 
 // Keyboard event listeners
 body.addEventListener('keydown', (e) => {
-  // Dont allow entering space
+  // Don't allow entering space
   if (e.code === 'Space') return;
   if (isFinite(e.key) || e.key === '.') {
     numberKeyAction(e.key);
@@ -223,3 +223,4 @@ function calculate() {
 // TODO 
 // Add modulo
 // Add + - DO LATER
+// Add parentheses support
