@@ -235,5 +235,5 @@ function calculate() {
 
 // TODO 
 // Add modulo
-// Add + - DO LATER
+// Add +/- DO LATER
 // Add parentheses support
