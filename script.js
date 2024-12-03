@@ -17,6 +17,7 @@ let buffer = '';
 numberButtons.forEach(button => {
   button.addEventListener('click', () => {
     if (expressionArray[0] === ERROR_MESSAGE) clear();
+    if (button.textContent === '.' && buffer.includes('.')) return;
     appendToBuffer(button.textContent);
     refreshDisplay(button.textContent);
   })
@@ -190,7 +191,6 @@ function calculate() {
 
 
 // TODO 
-// Dont allow write more than one DOT . (if button = . and if buffer has . return)
 // Add keyboard support
 // Add modulo
 // Add + - DO LATER
