@@ -9,41 +9,21 @@ const backspaceButton = document.querySelector('#backspace');
 const changeSignButton = document.querySelector('#changeSign');
 const ERROR_MESSAGE = 'ERROR!';
 const expressionArray = [];
-const OPERATORS = ['×', '+', '-', '/']
+const OPERATORS = ['*', '+', '-', '/']
+const body = document.querySelector('body');
 let buffer = '';
 
 
 // Event listeners
 numberButtons.forEach(button => {
   button.addEventListener('click', () => {
-    if (expressionArray[0] === ERROR_MESSAGE) clear();
-    if (button.textContent === '.' && buffer.includes('.')) return;
-    appendToBuffer(button.textContent);
-    refreshDisplay(button.textContent);
+    numberKeyAction(button.textContent);
   })
 });
 
 functionalButtons.forEach(button => {
   button.addEventListener('click', () => {
-    let lastItemOfArray = expressionArray[expressionArray.length - 1];
-    if (buffer === '') {
-      if (isOperator(lastItemOfArray)) {
-        switchOperator(button.textContent);
-        removeLastSymbol(); 
-        refreshDisplay(button.textContent);
-        return;
-        }
-    }
-    if (expressionArray[0] === ERROR_MESSAGE) clear();
-    if (buffer === '' && expressionArray.length === 1) {
-      pushValue();
-      pushOperator(button.textContent)
-      refreshDisplay(button.textContent);
-    }
-    if (buffer === '') return;
-    pushValue();
-    pushOperator(button.textContent)
-    refreshDisplay(button.textContent);
+    functionalButtonAction(button.textContent);
   })
 });
 
@@ -54,6 +34,27 @@ clearButton.addEventListener('click', clear);
 backspaceButton.addEventListener('click', backspace);
 
 changeSignButton.addEventListener('click', changeSign);
+
+// Keyboard event listeners
+body.addEventListener('keydown', (e) => {
+  // Dont allow entering space
+  if (e.code === 'Space') return;
+  if (isFinite(e.key) || e.key === '.') {
+    numberKeyAction(e.key);
+  };
+  if (isOperator(e.key)) {
+    functionalButtonAction(e.key);
+  };
+  if (e.key === 'Enter') {
+    calculate();
+  }
+  if (e.key === 'Backspace') {
+    backspace();
+  }
+  if (e.key.toLowerCase() === 'c') {
+    clear();
+  }
+});
 
 // Functions 
 function truncate(number) {
@@ -118,7 +119,7 @@ function removeLastSymbol() {
 
 function isOperator(item) {
   switch (item) {
-    case '×':
+    case '*':
     case '+':
     case '-':
     case '/':
@@ -138,6 +139,35 @@ function changeSign() {
  // DO LATER
 }
 
+function numberKeyAction(number) {
+  if (expressionArray[0] === ERROR_MESSAGE) clear();
+  if (number === '.' && buffer.includes('.')) return;
+  appendToBuffer(number);
+  refreshDisplay(number);
+}
+
+function functionalButtonAction(button) {
+  let lastItemOfArray = expressionArray[expressionArray.length - 1];
+  if (buffer === '') {
+    if (isOperator(lastItemOfArray)) {
+      switchOperator(button);
+      removeLastSymbol(); 
+      refreshDisplay(button);
+      return;
+      }
+  }
+  if (expressionArray[0] === ERROR_MESSAGE) clear();
+  if (buffer === '' && expressionArray.length === 1) {
+    pushValue();
+    pushOperator(button)
+    refreshDisplay(button);
+  }
+  if (buffer === '') return;
+  pushValue();
+  pushOperator(button)
+  refreshDisplay(button);
+}
+
 function calculate() {
   // Return if array is empty
   if (expressionArray.length === 0 || expressionArray.length === 1) return 1;
@@ -146,14 +176,14 @@ function calculate() {
   if (isOperator(lastItemOfArray)) {
     return;
     }
-  // operators: (× and /),(+ and -)
+  // operators: (* and /),(+ and -)
   do {  // DO UNTIL EXPRESSION ARRAY LENGTH IS 1
     // Find multiply or division operator index 
     let operatorIndex;
-    // If operator is '×' call multiply function
+    // If operator is '*' call multiply function
     do { // DO UNTIL THERE ARE NO MORE MULTIPLY AND DIVISION OPERATORS
-      operatorIndex = expressionArray.findIndex(item => item === '×' || item === '/');
-      if (expressionArray[operatorIndex] === '×') {
+      operatorIndex = expressionArray.findIndex(item => item === '*' || item === '/');
+      if (expressionArray[operatorIndex] === '*') {
         expressionArray[operatorIndex - 1] = multiply(+expressionArray[operatorIndex - 1], +expressionArray[operatorIndex + 1])
         expressionArray.splice(operatorIndex, 2);
       }
@@ -167,7 +197,7 @@ function calculate() {
         }
       }
     }
-    while (expressionArray.findIndex(item => item === '×' || item === '/') !== -1);
+    while (expressionArray.findIndex(item => item === '*' || item === '/') !== -1);
     
     // If operator is '+' call add function
     do { // DO UNTIL THERE ARE NO MORE ADD AND SUBTRACT OPERATORS
@@ -191,6 +221,5 @@ function calculate() {
 
 
 // TODO 
-// Add keyboard support
 // Add modulo
 // Add + - DO LATER
