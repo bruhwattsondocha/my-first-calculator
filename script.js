@@ -81,6 +81,12 @@ function divide(a, b) {;
 
 
 function pushValue() {
+  if (expressionArray.length > 0 && !isOperator(expressionArray[expressionArray.length - 1]))
+    {
+      expressionArray[expressionArray.length - 1] = expressionArray[expressionArray.length - 1] + buffer;
+      buffer = '';
+      return;
+    }
   if (buffer) {
     expressionArray.push(buffer);
     buffer = '';
@@ -130,9 +136,16 @@ function isOperator(item) {
 }
 
 function backspace() {
+// On backspace if pushed value is number and thing in array before this number not operator then concat them
   pushValue();
-  expressionArray.pop();
-  removeLastSymbol();
+  removeLastSymbol()
+    // if array element is empty = pop it
+  if (expressionArray.length > 0) {
+    expressionArray[expressionArray.length - 1] = expressionArray[expressionArray.length - 1].slice(0, -1);
+    if (expressionArray[expressionArray.length - 1] === '') {
+      expressionArray.pop();
+    }
+  }
 }
 
 function changeSign() {
