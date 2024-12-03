@@ -174,8 +174,10 @@ function functionalButtonAction(button) {
     pushValue();
     pushOperator(button)
     refreshDisplay(button);
+    return;
   }
-  if (buffer === '') return;
+  if (buffer === '' && expressionArray.length === 0) return;
+  // if (buffer === '') return;
   pushValue();
   pushOperator(button)
   refreshDisplay(button);
